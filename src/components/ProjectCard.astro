@@ -1,0 +1,171 @@
+---
+import { Image } from "astro:assets";
+import Button from "./Button.astro";
+import Overline from "./Overline.astro";
+
+interface Props {
+  title: string;
+  label?: string;
+  description?: string;
+  image?: ImageMetadata;
+  href: string;
+  layout?: "vertical" | "horizontal" | "overlay";
+  align?: "left" | "right";
+}
+
+const { title, label, description, image, href, layout = "vertical", align = "right" } = Astro.props;
+---
+
+<article class:list={["project-card", `project-card--${layout}`, layout === "overlay" && `project-card--${align}`]}>
+  {image && <div class="project-card__image">
+    <Image src={image} alt={title} width={900} height={500} />
+  </div>}
+  <div class="project-card__content">
+    {label && <Overline>{label}</Overline>}
+    <div class="project-card__text">
+      <h3 class="project-card__title">{title}</h3>
+      <p class="project-card__desc">{description}</p>
+    </div>
+    <Button href={href} variant="primary" size="sm">Find out more</Button>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    background: var(--color--surface-off);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .project-card__image :global(img) {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .project-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+  }
+
+  .project-card__content :global(.overline) {
+    background: var(--color--surface-mid);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .project-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .project-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .project-card__desc {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--color--front-main);
+  }
+
+  /* Vertical layout (default / listing page) */
+  .project-card--vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card--vertical .project-card__image {
+    padding: var(--space-sm);
+    padding-bottom: 0;
+  }
+
+  /* Horizontal layout (homepage highlights) */
+  .project-card--horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .project-card--horizontal .project-card__image {
+    padding: var(--space-sm);
+  }
+
+  /* Overlay layout — grid-based overlap */
+  .project-card--overlay {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 5rem 1fr 5rem auto;
+    background: transparent;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .project-card--overlay .project-card__image {
+    grid-row: 1 / 3;
+    grid-column: 1 / 12;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .project-card--overlay .project-card__image :global(img) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .project-card--overlay .project-card__content {
+    grid-row: 2 / 4;
+    background: var(--color--surface-off);
+    border-radius: var(--radius-lg);
+    padding: 4rem;
+    z-index: 1;
+  }
+
+  /* Right-aligned content */
+  .project-card--right .project-card__image {
+    grid-column: 1 / 12;
+  }
+
+  .project-card--right .project-card__content {
+    grid-column: 9 / 13;
+  }
+
+  /* Left-aligned content */
+  .project-card--left .project-card__image {
+    grid-column: 2 / 13;
+  }
+
+  .project-card--left .project-card__content {
+    grid-column: 1 / 5;
+  }
+
+  @media (max-width: 48rem) {
+    .project-card--horizontal {
+      grid-template-columns: 1fr;
+    }
+
+    .project-card--overlay {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card--overlay .project-card__image :global(img) {
+      height: 14rem;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .project-card--overlay .project-card__content {
+      background: var(--color--surface-off);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      margin-bottom: 0;
+    }
+  }
+</style>

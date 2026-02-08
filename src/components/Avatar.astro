@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const { src, alt, size = "sm" } = Astro.props;
+---
+
+<Image
+  src={src}
+  alt={alt}
+  width={400}
+  height={400}
+  class={`avatar-img avatar-img--${size}`}
+/>

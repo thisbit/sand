@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  role?: string;
+  bio?: string;
+  avatar?: ImageMetadata;
+}
+
+const { name, role, bio, avatar } = Astro.props;
+---
+
+<div class="team-member">
+  {bio && <p class="team-member__bio">{bio}</p>}
+  <div class="team-member__author">
+    {avatar && <Image src={avatar} alt={name} width={400} height={400} class="avatar-img avatar-img--sm" />}
+    <div class="team-member__info">
+      <span class="team-member__name">{name}</span>
+      {role && <span class="team-member__role">{role}</span>}
+    </div>
+  </div>
+</div>
+
+<style>
+  .team-member {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-md);
+    background: var(--color--surface-off);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .team-member__bio {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--color--front-main);
+  }
+
+  .team-member__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .team-member__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-member__name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color--front-accent);
+  }
+
+  .team-member__role {
+    font-size: var(--text-xs);
+    color: var(--color--front-main);
+    opacity: 0.7;
+  }
+</style>

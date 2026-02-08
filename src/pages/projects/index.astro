@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Overline from "../../components/Overline.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+
+const allProjects = await getCollection("projects");
+const projects = allProjects.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout title="Projects — Stonehaus" description="Browse our portfolio of architecture and interior design projects.">
+  <!-- Page Header -->
+  <section class="page-header section">
+    <div class="container text-center">
+      <Overline>PROJECTS</Overline>
+      <h1>Browse our projects</h1>
+    </div>
+  </section>
+
+  <!-- Project Grid -->
+  <section class="project-grid">
+    <div class="container">
+      <div class="project-grid__items">
+        {projects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            label={project.data.label}
+            description={project.data.description}
+            image={project.data.image}
+            href={`/projects/${project.id}/`}
+            layout="vertical"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding-bottom: var(--space-lg);
+  }
+
+  .page-header h1 {
+    margin-top: var(--space-xs);
+  }
+
+  .project-grid {
+    padding-bottom: var(--space-section);
+  }
+
+  .project-grid__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 48rem) {
+    .project-grid__items {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

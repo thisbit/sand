@@ -1,0 +1,100 @@
+---
+import SocialIcons from "./SocialIcons.astro";
+import logoSvg from "../assets/icons/logo.svg?raw";
+---
+
+<footer id="footer" class="footer">
+  <div class="footer__inner container">
+    <div class="footer__col">
+      <a href="/" class="footer__logo" aria-label="Home">
+        <Fragment set:html={logoSvg} />
+      </a>
+      <p class="footer__tagline">
+        We craft exceptional spaces that blend modern architecture with timeless design principles.
+      </p>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">Contact us</h4>
+      <address class="footer__address">
+        <p>123 Stone Street</p>
+        <p>Santa Cruz, CA 95060</p>
+        <p>(345) 555-777</p>
+        <p>info@stonehaus.com</p>
+      </address>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">Content</h4>
+      <nav class="footer__links">
+        <a href="/">Home</a>
+        <a href="/projects/">Projects</a>
+        <a href="/about/">About us</a>
+      </nav>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">We on social media</h4>
+      <p class="footer__social-text">Stay in touch for new information and best deals.</p>
+      <SocialIcons />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-xl);
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .footer__logo :global(svg) {
+    height: 1.5rem;
+    width: auto;
+  }
+
+  .footer__tagline {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-top: var(--space-sm);
+  }
+
+  .footer__heading {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer__address {
+    font-style: normal;
+    font-size: var(--text-sm);
+    line-height: 1.8;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+  }
+
+  .footer__links a:hover {
+    opacity: 0.7;
+  }
+
+  .footer__social-text {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  @media (max-width: 48rem) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+</style>

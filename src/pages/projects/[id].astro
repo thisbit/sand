@@ -1,0 +1,132 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Overline from "../../components/Overline.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} — Stonehaus`} description={project.data.description}>
+  <!-- Hero Image -->
+  {project.data.image && (
+    <section class="project-hero section">
+      <div class="container">
+        <Image
+          src={project.data.image}
+          alt={project.data.title}
+          width={1400}
+          height={600}
+        />
+      </div>
+    </section>
+  )}
+
+  <!-- Project Intro -->
+  <section class="project-intro section">
+    <div class="container text-center">
+      {project.data.label && <Overline>{project.data.label}</Overline>}
+      <h1>{project.data.title}</h1>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="project-body">
+    <div class="container container--narrow">
+      <h3 class="text-center">About this project</h3>
+      <div class="project-body__content">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  {project.data.gallery && project.data.gallery.length > 0 && (
+    <section class="project-gallery section">
+      <div class="container container--narrow text-center">
+        <h2>Project images</h2>
+        <div class="project-gallery__grid">
+          {project.data.gallery.map((img: ImageMetadata, i: number) => (
+            <Image
+              src={img}
+              alt={`${project.data.title} — image ${i + 1}`}
+              width={700}
+              height={467}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .project-hero {
+    padding-bottom: 0;
+  }
+
+  .project-hero :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+
+  .project-intro {
+    padding-bottom: var(--space-lg);
+  }
+
+  .project-intro h1 {
+    margin-top: var(--space-xs);
+  }
+
+  .project-body {
+    padding-bottom: var(--space-section);
+  }
+
+  .project-body h3 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .project-body__content {
+    text-align: left;
+  }
+
+  .project-body__content :global(p) {
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-gallery h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .project-gallery__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .project-gallery__grid :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+  }
+
+  @media (max-width: 48rem) {
+    .project-gallery__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

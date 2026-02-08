@@ -1,0 +1,174 @@
+---
+import Navlink from "./Navlink.astro";
+import Button from "./Button.astro";
+import logoSvg from "../assets/icons/logo.svg?raw";
+import menuIcon from "../assets/icons/menu-icon.svg?raw";
+import menuCloseIcon from "../assets/icons/menu-icon-close.svg?raw";
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects/" },
+  { label: "About", href: "/about/" },
+];
+---
+
+<header class="header">
+  <div class="header__inner container">
+    <a href="/" class="header__logo" aria-label="Home">
+      <Fragment set:html={logoSvg} />
+    </a>
+
+    <div class="header__right">
+      <nav class="header__nav" aria-label="Main navigation">
+        {navLinks.map((link) => (
+          <Navlink href={link.href}>{link.label}</Navlink>
+        ))}
+      </nav>
+      <Button href="#footer" variant="primary" size="sm">Contact us!</Button>
+    </div>
+
+    <button
+      class="header__menu-toggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span class="header__menu-open"><Fragment set:html={menuIcon} /></span>
+      <span class="header__menu-close"><Fragment set:html={menuCloseIcon} /></span>
+    </button>
+  </div>
+
+  <!-- Mobile nav dropdown -->
+  <div class="mobile-nav" data-mobile-nav>
+    <nav class="mobile-nav__links">
+      {navLinks.map((link) => (
+        <a href={link.href} class="mobile-nav__link">{link.label}</a>
+      ))}
+      <a href="#footer" class="mobile-nav__link">Contact us</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: var(--space-xs);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    background: var(--color--surface-off);
+    border-radius: var(--radius-lg);
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__logo :global(svg) {
+    width: 11rem;
+    height: 2.5rem;
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .header__menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+  }
+
+  .header__menu-toggle :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .header__menu-close {
+    display: none;
+  }
+
+  /* Mobile nav dropdown */
+  .mobile-nav {
+    display: none;
+  }
+
+  .mobile-nav.is-open {
+    display: block;
+  }
+
+  .mobile-nav__links {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: var(--color--front-accent);
+    padding: var(--space-md);
+    gap: 0.75rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .mobile-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    color: var(--color--surface-main);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .mobile-nav__link:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 48rem) {
+    .header__right {
+      display: none;
+    }
+
+    .header__menu-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const mobileNav = document.querySelector("[data-mobile-nav]");
+
+  function toggleMenu() {
+    const isOpen = mobileNav?.classList.toggle("is-open");
+    toggle?.setAttribute("aria-expanded", String(isOpen));
+  }
+
+  function closeMenu() {
+    mobileNav?.classList.remove("is-open");
+    toggle?.setAttribute("aria-expanded", "false");
+  }
+
+  toggle?.addEventListener("click", toggleMenu);
+
+  // Close on link click
+  mobileNav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+</script>

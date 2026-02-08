@@ -1,0 +1,124 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Overline from "../components/Overline.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+
+import aboutHero from "../assets/images/about-hero.jpg";
+
+const allTeam = await getCollection("team");
+const team = allTeam.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout title="About — Stonehaus" description="Meet the team behind Stonehaus, a small studio with ambitious ideas.">
+  <!-- Hero Image -->
+  <section class="about-hero section">
+    <div class="container">
+      <Image src={aboutHero} alt="Stonehaus studio workspace" width={1400} height={500} />
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="intro section">
+    <div class="container text-center">
+      <Overline>ABOUT OUR COMPANY</Overline>
+      <h1>A small team with ambitious ideas</h1>
+    </div>
+  </section>
+
+  <!-- About Text -->
+  <section class="about-text">
+    <div class="container container--narrow text-center">
+      <h3>A little bit about us</h3>
+      <div class="about-text__body">
+        <p>
+          Stonehaus was founded in 2016 with a simple conviction: that great architecture comes from listening first and drawing second. We are a team of architects, interior designers, and landscape architects who work together from a shared studio in Santa Cruz, California.
+        </p>
+        <p>
+          Our projects range from private residences and boutique hospitality venues to adaptive reuse and heritage restoration. What unites them is an obsession with materiality, natural light, and the way a space makes you feel the moment you step inside.
+        </p>
+        <p>
+          We believe every project deserves the same level of care — whether it's a mountain cabin or a waterfront villa. We stay small by choice so we can give each client the attention their vision demands, from the first site visit to the final walkthrough.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="team section">
+    <div class="container container--narrow text-center">
+      <Overline>OUR PEOPLE</Overline>
+      <h2>This is our team</h2>
+      <div class="team__grid">
+        {team.map((member) => (
+          <TestimonialCard
+            quote={member.body ?? ""}
+            name={member.data.name}
+            role={member.data.role}
+            avatar={member.data.avatar}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-bottom: 0;
+  }
+
+  .about-hero :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+
+  .intro {
+    padding-bottom: var(--space-lg);
+  }
+
+  .intro h1 {
+    margin-top: var(--space-xs);
+  }
+
+  .about-text {
+    padding-bottom: var(--space-section);
+  }
+
+  .about-text h3 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .about-text__body {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about-text__body p {
+    line-height: 1.8;
+  }
+
+  .team h2 {
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-lg);
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    text-align: left;
+  }
+
+  @media (max-width: 48rem) {
+    .team__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

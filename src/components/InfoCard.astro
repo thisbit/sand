@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<div class="info-card">
+  {icon && <div class="info-card__icon"><Fragment set:html={icon} /></div>}
+  <h4 class="info-card__title">{title}</h4>
+  <p class="info-card__desc">{description}</p>
+</div>
+
+<style>
+  .info-card {
+    background: var(--color--surface-off);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .info-card__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-card__icon :global(svg) {
+    width: 2rem;
+    height: 2rem;
+    color: var(--color--front-main);
+  }
+
+  .info-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .info-card__desc {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+</style>

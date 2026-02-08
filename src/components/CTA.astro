@@ -1,0 +1,72 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  buttonText?: string;
+  buttonHref?: string;
+  layout?: "inline" | "stacked";
+}
+
+const {
+  title,
+  description,
+  buttonText = "Let's chat",
+  buttonHref = "#footer",
+  layout = "stacked",
+} = Astro.props;
+---
+
+<div class:list={["cta", `cta--${layout}`]}>
+  <div class="cta__text">
+    <h2 class="cta__title">{title}</h2>
+    {description && <p class="cta__desc">{description}</p>}
+  </div>
+  <Button href={buttonHref} variant="primary" size="lg">{buttonText}</Button>
+</div>
+
+<style>
+  .cta {
+    background: var(--color--surface-off);
+    border-radius: 1.5rem;
+    padding: var(--space-xl);
+    box-shadow: 0 0.573rem 10.312rem 0 var(--color--surface-contrast);
+  }
+
+  .cta--stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .cta--inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .cta__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+  }
+
+  .cta__desc {
+    font-size: var(--text-base);
+    max-width: 40rem;
+  }
+
+  @media (max-width: 48rem) {
+    .cta--inline {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

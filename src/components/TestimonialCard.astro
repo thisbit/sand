@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  quote?: string;
+  name: string;
+  role?: string;
+  avatar?: ImageMetadata;
+}
+
+const { quote, name, role, avatar } = Astro.props;
+---
+
+<div class="testimonial">
+  {quote && <p class="testimonial__quote">{quote}</p>}
+  <div class="testimonial__author">
+    {avatar && <Image src={avatar} alt={name} width={400} height={400} class="avatar-img avatar-img--sm" />}
+    <div class="testimonial__author-info">
+      <span class="testimonial__name">{name}</span>
+      {role && <span class="testimonial__role">{role}</span>}
+    </div>
+  </div>
+</div>
+
+<style>
+  .testimonial {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    background: var(--color--surface-off);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .testimonial__quote {
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: var(--color--front-main);
+  }
+
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .testimonial__author-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial__name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color--front-accent);
+  }
+
+  .testimonial__role {
+    font-size: var(--text-xs);
+    color: var(--color--front-main);
+    opacity: 0.7;
+  }
+</style>

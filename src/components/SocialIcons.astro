@@ -1,0 +1,50 @@
+---
+import linkedinIcon from "../assets/icons/linkedin.svg?raw";
+import xIcon from "../assets/icons/x.svg?raw";
+import youtubeIcon from "../assets/icons/youtube.svg?raw";
+import facebookIcon from "../assets/icons/facebook.svg?raw";
+import emailIcon from "../assets/icons/email.svg?raw";
+
+const socials = [
+  { icon: linkedinIcon, label: "LinkedIn", href: "#" },
+  { icon: xIcon, label: "X", href: "#" },
+  { icon: youtubeIcon, label: "YouTube", href: "#" },
+  { icon: facebookIcon, label: "Facebook", href: "#" },
+  { icon: emailIcon, label: "Email", href: "#" },
+];
+---
+
+<ul class="social-icons">
+  {socials.map((s) => (
+    <li>
+      <a href={s.href} aria-label={s.label} class="social-icon">
+        <Fragment set:html={s.icon} />
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .social-icons {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color--front-main);
+    transition: opacity 0.2s ease;
+  }
+
+  .social-icon:hover {
+    opacity: 0.7;
+  }
+
+  .social-icon :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+</style>

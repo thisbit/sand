@@ -1,0 +1,190 @@
+/* ========================================
+   Sand Theme — Global Styles
+   ======================================== */
+
+/* ----- Reset ----- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ----- Design Tokens ----- */
+:root {
+  --color--surface-contrast: #cbc7b8;
+  --color--surface-main: #fbfaf7;
+  --color--surface-off: #f3f1ec;
+  --color--surface-mid: #dbd8cc;
+  --color--front-main: #343019;
+  --color--front-accent: #1c190b;
+
+  /* Typography scale (clamp: mobile → fluid → desktop) */
+  --text-xs: clamp(0.625rem, 0.6rem + 0.15vw, 0.75rem);
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --text-base: clamp(0.875rem, 0.84rem + 0.2vw, 1rem);
+  --text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
+  --text-3xl: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+  --text-hero: clamp(2rem, 1.4rem + 2.8vw, 3.25rem);
+
+  /* Spacing scale */
+  --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 0.65rem + 0.5vw, 1rem);
+  --space-md: clamp(1rem, 0.85rem + 0.75vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.1rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space-2xl: clamp(3rem, 2rem + 4vw, 6rem);
+  --space-section: clamp(3.5rem, 2.5rem + 4.5vw, 7.5rem);
+
+  /* Layout */
+  --container-max: 75rem;
+  --content-max: 52rem;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+}
+
+/* ----- Base ----- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color--front-main);
+  background-color: var(--color--surface-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ----- Typography ----- */
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  color: var(--color--front-accent);
+}
+
+h1 {
+  font-size: var(--text-hero);
+    font-weight: 400;
+
+}
+
+h2 {
+  font-size: var(--text-3xl);
+    font-weight: 400;
+
+}
+
+h3 {
+  font-size: var(--text-2xl);
+    font-weight: 700;
+
+}
+
+h4 {
+  font-size: var(--text-xl);
+    font-weight: 700;
+
+}
+
+p {
+  line-height: 1.7;
+  color: var(--color--front-main);
+}
+
+/* ----- Utilities ----- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.container--narrow {
+  max-width: var(--content-max);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.overline {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+  text-transform: uppercase;
+  color: var(--color--front-main);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.avatar-img {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--color--surface-contrast);
+}
+
+.avatar-img--sm {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.avatar-img--md {
+  width: 3rem;
+  height: 3rem;
+}
+
+.avatar-img--lg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
