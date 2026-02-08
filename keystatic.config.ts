@@ -3,7 +3,7 @@ import { config, collection, fields } from '@keystatic/core';
 export default config({
   storage: {
     kind: 'github',
-    repo: 'thisbit/sand',
+    repo: 'thisbit/thisbitsand',
   },
   collections: {
     projects: collection({
